@@ -9,10 +9,14 @@ import { shortCommit } from "./modules/sub/currentCommit.js";
 import { appName, genericUserAgent, version, internetExplorerRedirect } from "./modules/config.js";
 import { getJSON } from "./modules/api.js";
 import renderPage from "./modules/pageRender.js";
-import { apiJSON } from "./modules/sub/utils.js";
+import { apiJSON, deepCopy } from "./modules/sub/utils.js";
 import loc from "./modules/sub/i18n.js";
 import { Bright, Cyan } from "./modules/sub/consoleText.js";
 import stream from "./modules/stream/stream.js";
+import { UUID } from "./modules/sub/crypto.js";
+import { buildJS, buildCSS } from "./modules/builder.js";
+import { lookup } from "mime-types";
+import { Readable } from "stream";
 
 const commitHash = shortCommit();
 const app = express();
@@ -109,18 +113,64 @@ if (fs.existsSync('./.env')) {
                 "hash": commitHash,
                 "type": "default",
                 "lang": req.header('Accept-Language') ? req.header('Accept-Language').slice(0, 2) : "en",
-                "useragent": req.header('user-agent') ? req.header('user-agent') : genericUserAgent
+                "useragent": req.header('user-agent') ? req.header('user-agent') : genericUserAgent,
+                "distUUID": req.app.get('currentDistUUID'),
             }))
         }
     });
     app.get("/favicon.ico", async (req, res) => {
         res.redirect('/icons/favicon.ico');
     });
+
+    app.head("/dist/:uuid/:file", (req, res) => {
+        let { uuid, file } = req.params,
+            dist = req.app.get(`dist~${uuid}`);
+        
+        if (!dist || !dist.files.hasOwnProperty(file)) {
+            return res.sendStatus(404);
+        }
+
+        res.setHeader('Content-Type', lookup(file));
+        res.setHeader('Content-Length', dist.files[file].length);
+
+        res.status(204);
+        res.end();
+    });
+    app.get("/dist/:uuid/:file", (req, res) => {
+        let { uuid, file } = req.params,
+            dist = req.app.get(`dist~${uuid}`);
+        
+        if (!dist || !dist.files.hasOwnProperty(file)) {
+            return res.sendStatus(404);
+        }
+
+        res.setHeader('Content-Type', lookup(file));
+
+        const readableStream = Readable.from(dist.files[file]);
+        readableStream.pipe(res);
+    });
+
     app.get("/*", async (req, res) => {
         res.redirect('/')
     });
     app.listen(process.env.port, () => {
         console.log(`\n${Bright(`${appName} (${version})`)}\n\nURL: ${Cyan(`${process.env.selfURL}`)}\nPort: ${process.env.port}\nCurrent commit: ${Bright(`${commitHash}`)}\nStart time: ${Bright(Math.floor(new Date().getTime()))}\n`)
+
+        // Building JS and CSS with builder module
+        Promise.all([
+            buildJS(),
+            buildCSS()
+        ]).then(([js, css]) => {
+            let currentDistUUID = UUID(),
+                currentDist = { uuid: currentDistUUID, files: deepCopy(css.fontData) };
+            
+            currentDist.files[`bundle.${commitHash}.js`] = js;
+            currentDist.files[`bundle.${commitHash}.css`] = css.code;
+
+            // e is real 2401
+            app.set('currentDistUUID', currentDistUUID);
+            app.set(`dist~${currentDistUUID}`, currentDist);
+        });
     });
 } else {
     console.log('Required config files are missing. Please run "npm run setup" first.')

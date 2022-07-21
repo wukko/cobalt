@@ -52,6 +52,8 @@ Code might be a little messy, but I promise to improve it over time.
 - ffmpeg-static
 - node-cache
 - ytdl-core
+- mime-types
+- esbuild
 
 Setup script installs all needed **npm** dependencies, but you have to install Node.js and git yourself, if you don't have those already.
 

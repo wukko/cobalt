@@ -50,3 +50,6 @@ export function cleanURL(url, host) {
     }
     return url
 }
+export function deepCopy(object) {
+    return JSON.parse(JSON.stringify(object))
+}

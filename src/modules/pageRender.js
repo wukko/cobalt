@@ -47,8 +47,7 @@ export default function(obj) {
         <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
 
         <link rel="manifest" href="cobalt.webmanifest" />
-        <link rel="stylesheet" href="cobalt.css" />
-        <link rel="stylesheet" href="fonts/notosansmono/notosansmono.css" />
+        <link rel="stylesheet" href="dist/${obj.distUUID}/bundle.${obj.hash}.css" />
 
         <noscript><div style="margin: 2rem;">${loc(obj.lang, 'strings', 'noScript')}</div></noscript>
     </head>
@@ -194,7 +193,7 @@ export default function(obj) {
         </footer>
     </body>
     <script type="text/javascript">const loc = {noInternet:"${loc(obj.lang, 'apiError', 'noInternet')}"}</script>
-    <script type="text/javascript" src="cobalt.js"></script>
+    <script type="text/javascript" src="dist/${obj.distUUID}/bundle.${obj.hash}.js"></script>
 </html>`;
     } catch (err) {
         return `${loc('en', 'apiError', 'noRender', obj.hash)}`;

@@ -24,10 +24,12 @@
     "dependencies": {
         "cors": "^2.8.5",
         "dotenv": "^16.0.1",
+        "esbuild": "^0.14.49",
         "express": "^4.17.1",
         "express-rate-limit": "^6.3.0",
         "ffmpeg-static": "^5.0.0",
         "got": "^12.1.0",
+        "mime-types": "^2.1.35",
         "node-cache": "^5.1.2",
         "url-pattern": "^1.0.3",
         "xml-js": "^1.6.11",
