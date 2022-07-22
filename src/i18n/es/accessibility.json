@@ -1,0 +1,11 @@
+{
+    "about": "Acerca de",
+    "settings": "Abrir ajustes",
+    "input": "Cuadro de captura",
+    "download": "Botón de descarga",
+    "changelog": "Ver el changelog",
+    "close": "Cerrar la ventana emergente",
+    "alwaysVisibleButton": "Mantener el botón de descarga siempre visible",
+    "downloadPopup": "Preguntar qué hacer con las descargas",
+    "donate": "Abrir ventana emergente de donación"
+}

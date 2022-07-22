@@ -1,0 +1,22 @@
+{
+    "appearance": "apariencia",
+    "alwaysVisibleButton": "mantener >> visible",
+    "downloadPopupButton": "pregunta por la forma de guardar",
+    "format": "formato de descarga",
+    "formatInfo": "selecciona webm si necesitas la máxima calidad disponible. los videos webm suelen ser de mayor calidad, pero los dispositivos ios no pueden reproducirlos de forma nativa. todas las descargas \"solo audio\" son de máxima calidad.",
+    "theme": "tema",
+    "themeAuto": "auto",
+    "themeLight": "claro",
+    "themeDark": "oscuro",
+    "misc": "otros",
+    "general": "descargas",
+    "quality": "calidad",
+    "qmax": "max",
+    "qhig": "alta\n",
+    "qmid": "media\n",
+    "qlow": "baja\n",
+    "qlos": "mas baja",
+    "qualityDesc": "si la resolución seleccionada no está disponible, se elige la más cercana en su lugar.",
+    "extra": "adicional",
+    "audioOnly": "solo audio"
+}

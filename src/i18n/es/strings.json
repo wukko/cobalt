@@ -1,0 +1,19 @@
+{
+    "input": "pegue tu enlace aquí",
+    "aboutSummary": "{appName} es tu lugar ideal para descargas de redes sociales. sin anuncios u otras mierdas sospechosas. ¡solo necesitas pegar un enlace y listo!",
+    "embed": "guarda contenido de redes sociales sin preocuparte por rastreadores",
+    "supportedServices": "servicios compatibles:",
+    "sourceCode": "&gt;&gt; informa sobre problemas y consulta el código fuente en github",
+    "popupBottom": "hecho con <3 por wukko, traducción por adrigoomy",
+    "noScript": "{appName} usa javascript para las solicitudes de api y para la interfaz interactiva. tienes que permitir javascript en tu navegador para usar este sitio. no tenemos ningún anuncio ni rastreadores, lo prometo con el meñique.",
+    "donationsSub": "pagar por hosting es un poco complicado ahora mismo",
+    "donations": "no me gusta cóm está crypto ahora mismo, pero es la única forma que tengo para pagar cualquier cosa (incluyendo el hosting) en línea. servicios similares a paypal ya no están disponibles.",
+    "donateDm": "&gt;&gt; hazme saber si la moneda en la que deseas donar no está en la lista",
+    "clickToCopy": "click para copiar",
+    "iosDownload": "debes mantener presionado el botón de descarga y luego seleccionar \"descargar video\" en la ventana emergente que aparece para guardar el video. esto es necesario porque tienes un dispositivo ios.",
+    "normalDownload": "el botón de descarga abre una nueva pestaña con el archivo solicitado. puedes desactivar esta ventana emergente en los ajustes.",
+    "download": "descargar",
+    "copy": "copiar url",
+    "open": "abrir",
+    "github": "&gt;&gt; mira los cambios anteriores y contribuye en github"
+}

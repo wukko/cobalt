@@ -1,0 +1,18 @@
+{
+    "generic": "algo salió mal y no pude encontrar nada para ti. puedes intentar de nuevo, pero si el problema persiste, por favor <a class=\"text-backdrop nowrap\" href=\"{repo}\">hazme saber</a>.",
+    "notSupported": "parece que este servicio aún no es compatible o tu enlace no es válido.",
+    "brokenLink": "{s} es compatible con cobalt, pero algo está mal con tu enlace. ¿tal vez no lo copiaste completamente?",
+    "noLink": "¡no puedo adivinar que quieres descargar! por favor introduce un enlace.",
+    "noRender": "algo salió mal y la pagina no se pudo procesar. si quieres que solucione esto, por favor <a href=\"https://wukko.me/contacts\">contáctame</a>. sería útil si proporcionas el commit hash ({s}) junto con pasos de recreación, gracias :D",
+    "rateLimit": "estás haciendo demasiadas solicitudes. cálmate y vuelve a intentarlo en unos minutos.",
+    "noFetch": "no se pudo obtener metadata. comprueba si tu enlace es correcto e inténtalo de nuevo.",
+    "lengthLimit": "el limite de duración actual es de {s} minutos. lo que intentaste descargar es mas largo que eso. ¡escoge otra cosa que descargar!",
+    "errorFetch": "algo salió mal con la obtención de info. puedes probar con un formato y una resolución diferentes o simplemente intentarlo de nuevo más tarde.",
+    "corruptedStream": "parece que esta descarga está corrupta. intentalo de nuevo o imtemta con otro formato o resolución.",
+    "noInternet": "parece que no hay internet o la api de {appName} no está disponible. revisa tu conexión e intenta de nuevo.",
+    "cantConnectToAPI": "no pude conectarme a la api de {s} . parace que {s} no está disponible o la ip del servidor de {appName} fue bloqueada. intentalo de nuevo mas tarde.",
+    "nothingToDownload": "parece que no hay nada que descargar. ¡intentalo de nuevo con otro enlace!",
+    "liveVideo": "no se puede descaegar un video en vivo. espera que termine la transmisión y vuelve a intentarlo.",
+    "noStreamID": "no existe esa streamId.",
+    "noType": "no hay tal tipo de respuesta esperada."
+}
