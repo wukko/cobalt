@@ -40,7 +40,7 @@ if (
         Bright('please run the setup script to fix this: ') +
             Green('npm run setup')
     );
-    return;
+    process.exit(0);
 }
 
 const apiLimiter = rateLimit({
