@@ -40,7 +40,7 @@ if (
         Bright('please run the setup script to fix this: ') +
             Green('npm run setup')
     );
-    process.exit(1);
+    return;
 }
 
 const apiLimiter = rateLimit({
@@ -246,6 +246,10 @@ app.get('/*', (_req, res) => {
 });
 
 app.use((err, req, res, next) => {
+    // this makes deepsource happy, idk
+    if (!err) {
+        return;
+    }
     res.status(500).json({
         status: 'error',
         text: loc(languageCode(req), 'ErrorCantProcess'),
