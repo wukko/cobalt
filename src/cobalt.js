@@ -16,6 +16,7 @@ import loc from './localization/manager.js';
 import { buildFront } from './modules/build.js';
 import { changelogHistory } from './modules/pageRender/onDemand.js';
 import { sha256 } from './modules/sub/crypto.js';
+import { asyncHandler } from './modules/sub/async.js';
 
 const commitHash = shortCommit();
 const branch = getCurrentBranch();
@@ -125,42 +126,46 @@ app.use(
     })
 );
 
-app.post('/api/:type', corsMiddleware, async (req, res) => {
-    let ip = sha256(
-        req.header('x-forwarded-for')
-            ? req.header('x-forwarded-for')
-            : req.ip.replace('::ffff:', ''),
-        process.env.streamSalt
-    );
+app.post(
+    '/api/:type',
+    corsMiddleware,
+    asyncHandler(async (req, res) => {
+        let ip = sha256(
+            req.header('x-forwarded-for')
+                ? req.header('x-forwarded-for')
+                : req.ip.replace('::ffff:', ''),
+            process.env.streamSalt
+        );
 
-    if (req.params.type !== 'json') {
-        let j = apiJSON(0, { t: 'unknown response type' });
+        if (req.params.type !== 'json') {
+            let j = apiJSON(0, { t: 'unknown response type' });
+            res.status(j.status).json(j.body);
+            return;
+        }
+
+        let request = req.body;
+        if (!request.url) {
+            let j = apiJSON(0, {
+                t: loc(languageCode(req), 'ErrorNoLink'),
+            });
+            res.status(j.status).json(j.body);
+            return;
+        }
+
+        let chck = checkJSONPost(request);
+        if (request.url && !chck) {
+            let j = apiJSON(0, {
+                t: loc(languageCode(req), 'ErrorCouldntFetch'),
+            });
+            res.status(j.status).json(j.body);
+            return;
+        }
+
+        chck['ip'] = ip;
+        let j = await getJSON(chck['url'], languageCode(req), chck);
         res.status(j.status).json(j.body);
-        return;
-    }
-
-    let request = req.body;
-    if (!request.url) {
-        let j = apiJSON(0, {
-            t: loc(languageCode(req), 'ErrorNoLink'),
-        });
-        res.status(j.status).json(j.body);
-        return;
-    }
-
-    let chck = checkJSONPost(request);
-    if (request.url && !chck) {
-        let j = apiJSON(0, {
-            t: loc(languageCode(req), 'ErrorCouldntFetch'),
-        });
-        res.status(j.status).json(j.body);
-        return;
-    }
-
-    chck['ip'] = ip;
-    let j = await getJSON(chck['url'], languageCode(req), chck);
-    res.status(j.status).json(j.body);
-});
+    })
+);
 
 app.get('/api/:type', corsMiddleware, (req, res) => {
     let ip = sha256(
@@ -241,13 +246,14 @@ app.get('/', (req, res) => {
 app.get('/favicon.ico', (_req, res) => {
     res.redirect('/icons/favicon.ico');
 });
-app.get('/*', (_req, res) => {
+app.get('/*', (req, res) => {
     res.redirect('/');
 });
 
 app.use((err, req, res, next) => {
     // this makes deepsource happy, idk
     if (!err) {
+        next();
         return;
     }
     res.status(500).json({
