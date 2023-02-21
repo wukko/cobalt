@@ -126,123 +126,98 @@ app.use(
 );
 
 app.post('/api/:type', corsMiddleware, async (req, res) => {
-    try {
-        let ip = sha256(
-            req.header('x-forwarded-for')
-                ? req.header('x-forwarded-for')
-                : req.ip.replace('::ffff:', ''),
-            process.env.streamSalt
-        );
-        switch (req.params.type) {
-            case 'json':
-                try {
-                    let request = req.body;
-                    let chck = checkJSONPost(request);
-                    if (request.url && chck) {
-                        chck['ip'] = ip;
-                        let j = await getJSON(
-                            chck['url'],
-                            languageCode(req),
-                            chck
-                        );
-                        res.status(j.status).json(j.body);
-                    } else if (request.url && !chck) {
-                        let j = apiJSON(0, {
-                            t: loc(languageCode(req), 'ErrorCouldntFetch'),
-                        });
-                        res.status(j.status).json(j.body);
-                    } else {
-                        let j = apiJSON(0, {
-                            t: loc(languageCode(req), 'ErrorNoLink'),
-                        });
-                        res.status(j.status).json(j.body);
-                    }
-                } catch (e) {
-                    res.status(500).json({
-                        status: 'error',
-                        text: loc(languageCode(req), 'ErrorCantProcess'),
-                    });
-                }
-                break;
-            default:
-                let j = apiJSON(0, { t: 'unknown response type' });
-                res.status(j.status).json(j.body);
-                break;
-        }
-    } catch (e) {
-        res.status(500).json({
-            status: 'error',
-            text: loc(languageCode(req), 'ErrorCantProcess'),
-        });
+    let ip = sha256(
+        req.header('x-forwarded-for')
+            ? req.header('x-forwarded-for')
+            : req.ip.replace('::ffff:', ''),
+        process.env.streamSalt
+    );
+
+    if (req.params.type !== 'json') {
+        let j = apiJSON(0, { t: 'unknown response type' });
+        res.status(j.status).json(j.body);
+        return;
     }
+
+    let request = req.body;
+    if (!request.url) {
+        let j = apiJSON(0, {
+            t: loc(languageCode(req), 'ErrorNoLink'),
+        });
+        res.status(j.status).json(j.body);
+        return;
+    }
+
+    let chck = checkJSONPost(request);
+    if (request.url && !chck) {
+        let j = apiJSON(0, {
+            t: loc(languageCode(req), 'ErrorCouldntFetch'),
+        });
+        res.status(j.status).json(j.body);
+        return;
+    }
+
+    chck['ip'] = ip;
+    let j = await getJSON(chck['url'], languageCode(req), chck);
+    res.status(j.status).json(j.body);
 });
 
 app.get('/api/:type', corsMiddleware, (req, res) => {
-    try {
-        let ip = sha256(
-            req.header('x-forwarded-for')
-                ? req.header('x-forwarded-for')
-                : req.ip.replace('::ffff:', ''),
-            process.env.streamSalt
-        );
-        switch (req.params.type) {
-            case 'json':
-                res.status(405).json({
-                    status: 'error',
-                    text: 'GET method for this endpoint has been deprecated. see https://github.com/wukko/cobalt/blob/current/docs/API.md for up-to-date API documentation.',
-                });
+    let ip = sha256(
+        req.header('x-forwarded-for')
+            ? req.header('x-forwarded-for')
+            : req.ip.replace('::ffff:', ''),
+        process.env.streamSalt
+    );
+    switch (req.params.type) {
+        case 'json':
+            res.status(405).json({
+                status: 'error',
+                text: 'GET method for this endpoint has been deprecated. see https://github.com/wukko/cobalt/blob/current/docs/API.md for up-to-date API documentation.',
+            });
+            break;
+        case 'stream':
+            if (req.query.p) {
+                res.status(200).json({ status: 'continue' });
                 break;
-            case 'stream':
-                if (req.query.p) {
-                    res.status(200).json({ status: 'continue' });
-                    break;
-                }
+            }
 
-                if (!(req.query.t && req.query.h && req.query.e)) {
-                    let j = apiJSON(0, { t: 'no stream id' });
-                    res.status(j.status).json(j.body);
-                    break;
-                }
-
-                stream(res, ip, req.query.t, req.query.h, req.query.e);
-                break;
-            case 'onDemand': {
-                if (!req.query.blockId) {
-                    let j = apiJSON(0, { t: 'no block id' });
-                    res.status(j.status).json(j.body);
-                    break;
-                }
-
-                let blockId = req.query.blockId.slice(0, 3);
-                let r, j;
-                switch (blockId) {
-                    case '0':
-                        r = changelogHistory();
-                        j = r
-                            ? apiJSON(3, { t: r })
-                            : apiJSON(0, {
-                                  t: "couldn't render this block",
-                              });
-                        break;
-                    default:
-                        j = apiJSON(0, {
-                            t: "couldn't find a block with this id",
-                        });
-                        break;
-                }
+            if (!(req.query.t && req.query.h && req.query.e)) {
+                let j = apiJSON(0, { t: 'no stream id' });
                 res.status(j.status).json(j.body);
                 break;
             }
-            default:
-                let j = apiJSON(0, { t: 'unknown response type' });
+
+            stream(res, ip, req.query.t, req.query.h, req.query.e);
+            break;
+        case 'onDemand': {
+            if (!req.query.blockId) {
+                let j = apiJSON(0, { t: 'no block id' });
                 res.status(j.status).json(j.body);
                 break;
+            }
+
+            let blockId = req.query.blockId.slice(0, 3);
+            let r, j;
+            if (blockId !== '0') {
+                j = apiJSON(0, {
+                    t: "couldn't find a block with this id",
+                });
+            } else {
+                r = changelogHistory();
+                j = r
+                    ? apiJSON(3, { t: r })
+                    : apiJSON(0, {
+                          t: "couldn't render this block",
+                      });
+            }
+            res.status(j.status).json(j.body);
+            break;
         }
-    } catch (e) {
-        res.status(500).json({
-            status: 'error',
-            text: loc(languageCode(req), 'ErrorCantProcess'),
-        });
+        default:
+            let j = apiJSON(0, { t: 'unknown response type' });
+            res.status(j.status).json(j.body);
+            break;
     }
 });
 
@@ -270,6 +245,13 @@ app.get('/*', (_req, res) => {
     res.redirect('/');
 });
 
+app.use((err, req, res, next) => {
+    res.status(500).json({
+        status: 'error',
+        text: loc(languageCode(req), 'ErrorCantProcess'),
+    });
+});
+
 app.listen(process.env.port, () => {
     let startTime = new Date();
     console.log(
@@ -280,14 +262,6 @@ app.listen(process.env.port, () => {
             `${startTime.toUTCString()} (${Math.floor(new Date().getTime())})`
         )}\n`
     );
-    if (process.env.port !== 80) {
-        console.log(
-            `URL: ${Cyan(
-                `${process.env.selfURL.slice(0, -1)}:${process.env.port}/`
-            )}`
-        );
-    } else {
-        console.log(`URL: ${Cyan(`${process.env.selfURL}`)}`);
-    }
+    console.log(`URL: ${Cyan(`${process.env.selfURL}`)}`);
     console.log(`Port: ${process.env.port}`);
 });
