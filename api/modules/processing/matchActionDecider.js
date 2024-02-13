@@ -1,6 +1,5 @@
-import { audioIgnore, services, supportedAudio } from "../config.js";
-import { apiJSON } from "../sub/utils.js";
-import loc from "../../localization/manager.js";
+import { audioIgnore, services, supportedAudio } from "../../core/config.js";
+import { apiJSON } from "../util/misc.js";
 import createFilename from "./createFilename.js";
 
 export default function(r, host, userFormat, isAudioOnly, lang, isAudioMuted, disableMetadata, filenamePattern, toGif) {
@@ -35,7 +34,7 @@ export default function(r, host, userFormat, isAudioOnly, lang, isAudioMuted, di
 
     switch (action) {
         default:
-            return apiJSON(0, { t: loc(lang, 'ErrorEmptyDownload') });
+            return apiJSON(0, { t: 'ErrorEmptyDownload' });
 
         case "photo":
             responseType = 1;
@@ -127,7 +126,7 @@ export default function(r, host, userFormat, isAudioOnly, lang, isAudioMuted, di
 
         case "audio": 
             if ((host === "reddit" && r.typeId === 1) || audioIgnore.includes(host)) {
-                return apiJSON(0, { t: loc(lang, 'ErrorEmptyDownload') })
+                return apiJSON(0, { t: 'ErrorEmptyDownload' })
             }
 
             let processType = "render",

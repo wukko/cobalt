@@ -2,8 +2,8 @@ import NodeCache from "node-cache";
 import { randomBytes } from "crypto";
 import { nanoid } from 'nanoid';
 
-import { decryptStream, encryptStream, generateHmac } from "../sub/crypto.js";
-import { streamLifespan } from "../config.js";
+import { decryptStream, encryptStream, generateHmac } from "../util/crypto.js";
+import { streamLifespan } from "../../core/config.js";
 
 const streamCache = new NodeCache({
     stdTTL: streamLifespan/1000,

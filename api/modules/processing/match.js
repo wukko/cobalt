@@ -1,9 +1,6 @@
 import { strict as assert } from "node:assert";
 
-import { apiJSON } from "../sub/utils.js";
-import { errorUnsupported, genericError, brokenLink } from "../sub/errors.js";
-
-import loc from "../../localization/manager.js";
+import { apiJSON } from "../util/misc.js";
 
 import { testers } from "./servicesPatternTesters.js";
 import matchActionDecider from "./matchActionDecider.js";
@@ -32,8 +29,8 @@ export default async function(host, patternMatch, url, lang, obj) {
     try {
         let r, isAudioOnly = !!obj.isAudioOnly, disableMetadata = !!obj.disableMetadata;
 
-        if (!testers[host]) return apiJSON(0, { t: errorUnsupported(lang) });
-        if (!(testers[host](patternMatch))) return apiJSON(0, { t: brokenLink(lang, host) });
+        if (!testers[host]) return apiJSON(0, { t: 'ErrorUnsupported' });
+        if (!(testers[host](patternMatch))) return apiJSON(0, { t: 'ErrorBrokenLink' });
 
         switch (host) {
             case "twitter":
@@ -161,20 +158,18 @@ export default async function(host, patternMatch, url, lang, obj) {
                 r = await dailymotion(patternMatch);
                 break;
             default:
-                return apiJSON(0, { t: errorUnsupported(lang) });
+                return apiJSON(0, { t: 'ErrorUnsupported' });
         }
 
         if (r.isAudioOnly) isAudioOnly = true;
         let isAudioMuted = isAudioOnly ? false : obj.isAudioMuted;
 
         if (r.error && r.critical)
-            return apiJSON(6, { t: loc(lang, r.error) })
+            return apiJSON(6, { t: r.error })
 
         if (r.error)
             return apiJSON(0, {
-                t: Array.isArray(r.error)
-                    ? loc(lang, r.error[0], r.error[1])
-                    : loc(lang, r.error)
+                t: r.error
             })
 
         return matchActionDecider(
@@ -183,6 +178,6 @@ export default async function(host, patternMatch, url, lang, obj) {
             obj.filenamePattern, obj.twitterGif
         )
     } catch (e) {
-        return apiJSON(0, { t: genericError(lang, host) })
+        return apiJSON(0, { t: 'ErrorBadFetch' })
     }
 }

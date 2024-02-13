@@ -1,5 +1,5 @@
 import psl from "psl";
-import { genericUserAgent } from "../../config.js";
+import { genericUserAgent } from "../../../core/config.js";
 
 const API_KEY = 'jrsCWX1XDuVxAFO4GkK147syAoN8BJZ5voz8tS80bPcj26Vc5Z';
 const API_BASE = 'https://api-http2.tumblr.com';

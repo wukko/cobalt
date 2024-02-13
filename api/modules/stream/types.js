@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import ffmpeg from "ffmpeg-static";
-import { ffmpegArgs, genericUserAgent } from "../config.js";
-import { metadataManager } from "../sub/utils.js";
+import { ffmpegArgs, genericUserAgent } from "../../core/config.js";
+import { metadataManager } from "../util/misc.js";
 import { request } from "undici";
 import { create as contentDisposition } from "content-disposition-header";
 

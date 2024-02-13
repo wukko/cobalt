@@ -1,4 +1,4 @@
-import { genericUserAgent, maxVideoDuration } from "../../config.js";
+import { genericUserAgent, maxVideoDuration } from "../../../core/config.js";
 import { getCookie, updateCookieValues } from "../cookie/manager.js";
 
 async function getAccessToken() {

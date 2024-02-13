@@ -9,8 +9,7 @@ import { getJSON } from "../modules/util/preApi.js";
 import { apiJSON, checkJSONPost, getIP, languageCode } from "../modules/util/misc.js";
 import { Bright, Cyan } from "../modules/util/consoleText.js";
 import stream from "../modules/stream/stream.js";
-import loc from "../localization/manager.js";
-import { generateHmac } from "../modules/sub/crypto.js";
+import { generateHmac } from "../modules/util/crypto.js";
 import { verifyStream } from "../modules/stream/manage.js";
 
 export function runAPI(express, app, gitCommit, gitBranch, __dirname) {
@@ -28,7 +27,7 @@ export function runAPI(express, app, gitCommit, gitBranch, __dirname) {
         handler: (req, res, next, opt) => {
             return res.status(429).json({
                 "status": "rate-limit",
-                "text": loc(languageCode(req), 'ErrorRateLimit')
+                "text": 'ErrorRateLimit'
             });
         }
     });
@@ -41,7 +40,7 @@ export function runAPI(express, app, gitCommit, gitBranch, __dirname) {
         handler: (req, res, next, opt) => {
             return res.status(429).json({
                 "status": "rate-limit",
-                "text": loc(languageCode(req), 'ErrorRateLimit')
+                "text": 'ErrorRateLimit'
             });
         }
     });
@@ -109,11 +108,11 @@ export function runAPI(express, app, gitCommit, gitBranch, __dirname) {
                     j = await getJSON(chck.url, lang, chck);
                 } else {
                     j = apiJSON(0, {
-                        t: !contentCon ? "invalid content type header" : loc(lang, 'ErrorNoLink')
+                        t: !contentCon ? "invalid content type header" : 'ErrorNoLink'
                     });
                 }
             } catch (e) {
-                j = apiJSON(0, { t: loc(lang, 'ErrorCantProcess') });
+                j = apiJSON(0, { t: 'ErrorCantProcess' });
             }
             return res.status(j.status).json(j.body);
         } catch (e) {
@@ -166,7 +165,7 @@ export function runAPI(express, app, gitCommit, gitBranch, __dirname) {
         } catch (e) {
             return res.status(500).json({
                 status: "error",
-                text: loc(languageCode(req), 'ErrorCantProcess')
+                text: 'ErrorCantProcess'
             });
         }
     });
@@ -176,7 +175,7 @@ export function runAPI(express, app, gitCommit, gitBranch, __dirname) {
     });
 
     app.get('/favicon.ico', (req, res) => {
-        res.sendFile(`${__dirname}/src/front/icons/favicon.ico`)
+        res.sendFile(`${__dirname}/api/assets/favicon.ico`)
     });
 
     app.get('/*', (req, res) => {

@@ -1,4 +1,4 @@
-import { services } from "../config.js";
+import { services } from "../../core/config.js";
 import { strict as assert } from "node:assert";
 import psl from "psl";
 

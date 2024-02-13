@@ -1,19 +1,15 @@
 {
-    "name": "cobalt",
+    "name": "cobalt_api",
     "description": "save what you love",
-    "version": "7.12",
+    "version": "8.0",
     "author": "wukko",
-    "exports": "./src/cobalt.js",
+    "exports": "./server.js",
     "type": "module",
     "engines": {
         "node": ">=18"
     },
     "scripts": {
-        "start": "node src/cobalt",
-        "setup": "node src/modules/setup",
-        "test": "node src/test/test",
-        "build": "node src/modules/buildStatic",
-        "testFilenames": "node src/test/testFilenamePresets"
+        "start": "node server.js"
     },
     "repository": {
         "type": "git",

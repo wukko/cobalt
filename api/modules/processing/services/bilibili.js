@@ -1,4 +1,4 @@
-import { genericUserAgent, maxVideoDuration } from "../../config.js";
+import { genericUserAgent, maxVideoDuration } from "../../../core/config.js";
 
 // TO-DO: higher quality downloads (currently requires an account)
 

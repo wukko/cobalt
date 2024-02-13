@@ -1,5 +1,5 @@
 import { createStream } from "../../stream/manage.js";
-import { genericUserAgent } from "../../config.js";
+import { genericUserAgent } from "../../../core/config.js";
 import { getCookie, updateCookie } from "../cookie/manager.js";
 
 const commonInstagramHeaders = {

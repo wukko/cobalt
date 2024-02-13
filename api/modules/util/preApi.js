@@ -1,17 +1,15 @@
-import { services } from "./config.js";
+import { services } from "../../core/config.js";
 
-import { apiJSON } from "./sub/utils.js";
-import { errorUnsupported } from "./sub/errors.js";
-import loc from "../localization/manager.js";
-import match from "./processing/match.js";
-import { getHostIfValid } from "./processing/url.js";
+import { apiJSON } from "./misc.js";
+import match from "../processing/match.js";
+import { getHostIfValid } from "../processing/url.js";
 
 export async function getJSON(url, lang, obj) {
     try {
         const host = getHostIfValid(url);
 
         if (!host || !services[host].enabled) {
-            return apiJSON(0, { t: errorUnsupported(lang) });
+            return apiJSON(0, { t: 'ErrorUnsupported' });
         }
 
         let patternMatch;
@@ -23,11 +21,11 @@ export async function getJSON(url, lang, obj) {
         }
 
         if (!patternMatch) {
-            return apiJSON(0, { t: errorUnsupported(lang) });
+            return apiJSON(0, { t: 'ErrorUnsupported' });
         }
 
         return await match(host, patternMatch, url, lang, obj)
     } catch (e) {
-        return apiJSON(0, { t: loc(lang, 'ErrorSomethingWentWrong') })
+        return apiJSON(0, { t: 'ErrorSomethingWentWrong' })
     }
 }

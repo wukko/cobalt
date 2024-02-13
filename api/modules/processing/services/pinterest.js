@@ -1,4 +1,4 @@
-import { genericUserAgent } from "../../config.js";
+import { genericUserAgent } from "../../../core/config.js";
 
 const videoLinkBase = {
     "regular": "https://v1.pinimg.com/videos/mc/720p/",

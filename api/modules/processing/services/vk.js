@@ -1,5 +1,5 @@
-import { genericUserAgent, maxVideoDuration } from "../../config.js";
-import { cleanString } from "../../sub/utils.js";
+import { genericUserAgent, maxVideoDuration } from "../../../core/config.js";
+import { cleanString } from "../../util/misc.js";
 
 const resolutions = ["2160", "1440", "1080", "720", "480", "360", "240"];
 

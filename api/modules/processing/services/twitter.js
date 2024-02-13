@@ -1,4 +1,4 @@
-import { genericUserAgent } from "../../config.js";
+import { genericUserAgent } from "../../../core/config.js";
 import { createStream } from "../../stream/manage.js";
 
 const graphqlURL = 'https://twitter.com/i/api/graphql/5GOHgZe-8U2j5sVHQzEm9A/TweetResultByRestId';

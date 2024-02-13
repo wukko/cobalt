@@ -1,4 +1,4 @@
-import { genericUserAgent } from "../../config.js";
+import { genericUserAgent } from "../../../core/config.js";
 
 const userAgent = genericUserAgent.split(' Chrome/1')[0],
     config = {

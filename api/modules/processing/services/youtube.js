@@ -1,6 +1,6 @@
 import { Innertube } from 'youtubei.js';
-import { maxVideoDuration } from '../../config.js';
-import { cleanString } from '../../sub/utils.js';
+import { maxVideoDuration } from '../../../core/config.js';
+import { cleanString } from '../../util/misc.js';
 
 const yt = await Innertube.create();
 

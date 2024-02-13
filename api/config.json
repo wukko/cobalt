@@ -2,90 +2,6 @@
     "streamLifespan": 90000,
     "maxVideoDuration": 10800000,
     "genericUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
-    "authorInfo": {
-        "name": "wukko",
-        "link": "https://wukko.me/",
-        "contact": "https://wukko.me/contacts",
-        "support": {
-            "default": {
-                "email": {
-                    "emoji": "📧",
-                    "url": "mailto:support@cobalt.tools",
-                    "name": "support@cobalt.tools"
-                },
-                "twitter": {
-                    "emoji": "🐦",
-                    "url": "https://twitter.com/justusecobalt",
-                    "name": "@justusecobalt"
-                },
-                "discord": {
-                    "emoji": "👾",
-                    "url": "https://discord.gg/pQPt8HBUPu",
-                    "name": "cobalt discord server"
-                }
-            },
-            "ru": {
-                "telegram": {
-                    "emoji": "📬",
-                    "url": "https://t.me/justusecobalt_ru",
-                    "name": "канал в telegram"
-                },
-                "email": {
-                    "emoji": "📧",
-                    "url": "mailto:support@cobalt.tools",
-                    "name": "support@cobalt.tools"
-                }
-            }
-        }
-    },
-    "donations": {
-        "crypto": {
-            "monero": "4B1SNB6s8Pq1hxjNeKPEe8Qa8EP3zdL16Sqsa7QDoJcUecKQzEj9BMxWnEnTGu12doKLJBKRDUqnn6V9qfSdXpXi3Nw5Uod",
-            "litecoin": "ltc1qvp0xhrk2m7pa6p6z844qcslfyxv4p3vf95rhna",
-            "ethereum": "0x4B4cF23051c78c7A7E0eA09d39099621c46bc302",
-            "usdt-erc20": "0x4B4cF23051c78c7A7E0eA09d39099621c46bc302",
-            "usdt-trc20": "TVbx7YT3rBfu931Gxko6pRfXtedYqbgnBB",
-            "bitcoin": "bc1qlvcnlnyzfsgnuxyxsv3k0p0q0yln0azjpadyx4",
-            "bitcoin-alt": "18PKf6N2cHrmSzz9ZzTSvDd2jAkqGC7SxA",
-            "ton": "UQA3SO-hHZq1oCCT--u6or6ollB8fd2o52aD8mXiLk9iDZd3"
-        },
-        "links": {
-            "boosty": "https://boosty.to/wukko/donate"
-        }
-    },
-    "links": {
-        "saveToGalleryShortcut": "https://www.icloud.com/shortcuts/14e9aebf04b24156acc34ceccf7e6fcd",
-        "saveToFilesShortcut": "https://www.icloud.com/shortcuts/2134cd9d4d6b41448b2201f933542b2e",
-        "statusPage": "https://status.cobalt.tools/",
-        "troubleshootingGuide": "https://github.com/wukko/cobalt/blob/current/docs/troubleshooting.md"
-    },
-    "celebrations": {
-        "01-01": "🎄",
-        "02-17": "😺",
-        "02-22": "😺",
-        "03-01": "😺",
-        "03-08": "💪",
-        "05-26": "🎂",
-        "08-08": "😺",
-        "08-26": "🐶",
-        "10-29": "😺",
-        "10-30": "🎃",
-        "10-31": "🎃",
-        "11-01": "🕯️",
-        "11-02": "🕯️",
-        "12-20": "🎄",
-        "12-21": "🎄",
-        "12-22": "🎄",
-        "12-23": "🎄",
-        "12-24": "🎄",
-        "12-25": "🎄",
-        "12-26": "🎄",
-        "12-27": "🎄",
-        "12-28": "🎄",
-        "12-29": "🎄",
-        "12-30": "🎄",
-        "12-31": "🎄"
-    },
     "supportedAudio": ["mp3", "ogg", "wav", "opus"],
     "ffmpegArgs": {
         "webm": ["-c:v", "copy", "-c:a", "copy"],
@@ -94,15 +10,5 @@
         "audio": ["-ar", "48000", "-ac", "2", "-b:a", "320k"],
         "m4a": ["-movflags", "frag_keyframe+empty_moov"],
         "gif": ["-vf", "scale=-1:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse", "-loop", "0"]
-    },
-    "sponsors": [{
-        "name": "royale",
-        "fullName": "RoyaleHosting",
-        "url": "https://royalehosting.net/",
-        "logo": {
-            "width": 605,
-            "height": 136,
-            "scale": 5
-        }
-    }]
+    }
 }

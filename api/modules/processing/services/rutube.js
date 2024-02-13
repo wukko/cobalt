@@ -1,6 +1,6 @@
 import HLS from 'hls-parser';
-import { maxVideoDuration } from "../../config.js";
-import { cleanString } from '../../sub/utils.js';
+import { maxVideoDuration } from "../../../core/config.js";
+import { cleanString } from '../../util/misc.js';
 
 export default async function(obj) {
     let quality = obj.quality === "max" ? "9000" : obj.quality;
