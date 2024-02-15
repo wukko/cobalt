@@ -1,5 +1,6 @@
 import UrlPattern from "url-pattern";
-import { loadJSON } from "./sub/loadFromFs.js";
+import { loadJSON } from "../modules/util/loadFromFs.js";
+
 const config = loadJSON("./src/config.json");
 const packageJson = loadJSON("./package.json");
 const servicesConfigJson = loadJSON("./src/modules/processing/servicesConfig.json");

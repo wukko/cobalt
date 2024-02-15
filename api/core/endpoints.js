@@ -4,10 +4,10 @@ import { randomBytes } from "crypto";
 
 const ipSalt = randomBytes(64).toString('hex');
 
-import { version } from "../modules/config.js";
-import { getJSON } from "../modules/api.js";
-import { apiJSON, checkJSONPost, getIP, languageCode } from "../modules/sub/utils.js";
-import { Bright, Cyan } from "../modules/sub/consoleText.js";
+import { version } from "./config.js";
+import { getJSON } from "../modules/util/preApi.js";
+import { apiJSON, checkJSONPost, getIP, languageCode } from "../modules/util/misc.js";
+import { Bright, Cyan } from "../modules/util/consoleText.js";
 import stream from "../modules/stream/stream.js";
 import loc from "../localization/manager.js";
 import { generateHmac } from "../modules/sub/crypto.js";
