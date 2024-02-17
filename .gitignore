@@ -24,3 +24,7 @@ docker-compose.yml
 
 # cookie file
 cookies.json
+
+# playwright results
+test-results
+playwright-report

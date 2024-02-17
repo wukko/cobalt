@@ -1,0 +1,23 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+    branches:
+      - current
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Run playwright tests
+        run: npm run test:playwright

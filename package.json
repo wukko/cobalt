@@ -12,6 +12,7 @@
         "start": "node src/cobalt",
         "setup": "node src/modules/setup",
         "test": "node src/test/test",
+        "test:playwright": "npx playwright test",
         "build": "node src/modules/buildStatic",
         "testFilenames": "node src/test/testFilenamePresets"
     },
@@ -42,5 +43,8 @@
         "undici": "^5.19.1",
         "url-pattern": "1.0.3",
         "youtubei.js": "^6.4.1"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.40.1"
     }
 }
