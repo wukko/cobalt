@@ -7,7 +7,7 @@ const isSafari = ua.match("safari/");
 const isFirefox = ua.match("firefox/");
 const isOldFirefox = ua.match("firefox/") && ua.split("firefox/")[1].split('.')[0] < 103;
 
-const regex = new RegExp(/https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/);
+const regex = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/g);
 const notification = `<div class="notification-dot"></div>`;
 
 const switchers = {
@@ -103,13 +103,13 @@ document.addEventListener("keydown", (event) => {
     }
 })
 function button() {
-    let regexTest = regex.test(eid("url-input-area").value);
+    let regexTest = (eid("url-input-area").value).match(regex);
     if ((eid("url-input-area").value).length > 0) {
         eid("url-clear").style.display = "block";
     } else {
         eid("url-clear").style.display = "none";
     }
-    regexTest ? changeDownloadButton(1, '>>') : changeDownloadButton(0, '>>');
+    regexTest ? changeDownloadButton(1, '>>') : changeDownloadButton(0, '>>'); eid("url-input-area").value = regexTest[0];
 }
 function clearInput() {
     eid("url-input-area").value = '';
