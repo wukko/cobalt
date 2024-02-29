@@ -38,6 +38,8 @@ export default function(obj) {
 
     audioFormats[0]["text"] = t('SettingsAudioFormatBest');
 
+    const strippedURL = process.env.webURL.replace(/^https?:\/\//, '').replace(/\/$/, '');
+
     try {
         return `
 <!DOCTYPE html>
@@ -56,6 +58,8 @@ export default function(obj) {
         <meta name="description" content="${t('AboutSummary')}">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary">
+
+        <link rel="search" href="/opensearch-${obj.lang}.xml" type="application/opensearchdescription+xml" title="${t('OpenSearchTitle')}">
         
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -100,61 +104,61 @@ export default function(obj) {
                             name: "services",
                             title: `${emoji("🔗")} ${t("CollapseServices")}`,
                             body: `${enabledServices}`
-                            + `<div class="explanation embedded">${t("SupportNotAffiliated")}`
-                            + `${obj.lang === "ru" ? `<br>${t("SupportMetaNoticeRU")}` : ''}`
-                            + `</div>`
-                            + `${t("ServicesNote")}`
+                                + `<div class="explanation embedded">${t("SupportNotAffiliated")}`
+                                + `${obj.lang === "ru" ? `<br>${t("SupportMetaNoticeRU")}` : ''}`
+                                + `</div>`
+                                + `${t("ServicesNote")}`
                         }, {
                             name: "keyboard",
                             title: `${emoji("⌨")} ${t("CollapseKeyboard")}`,
-                            body: 
-                            `${t("KeyboardShortcutsIntro")}
+                            body:
+                                `${t("KeyboardShortcutsIntro")}
                             ${keyboardShortcuts([{
-                                items: [{
-                                    combo: "Shift+D",
-                                    name: t("PasteFromClipboard")
+                                    items: [{
+                                        combo: "Shift+D",
+                                        name: t("PasteFromClipboard")
+                                    }, {
+                                        combo: "Shift+K",
+                                        name: t("ModeToggleAuto")
+                                    }, {
+                                        combo: "Shift+L",
+                                        name: t("ModeToggleAudio")
+                                    }]
                                 }, {
-                                     combo: "Shift+K",
-                                     name: t("ModeToggleAuto")
+                                    items: [{
+                                        combo: "⌘/Ctrl+V",
+                                        name: t("KeyboardShortcutQuickPaste")
+                                    }, {
+                                        combo: "Esc",
+                                        name: t("KeyboardShortcutClear")
+                                    }, {
+                                        combo: "Esc",
+                                        name: t("KeyboardShortcutClosePopup")
+                                    }]
                                 }, {
-                                     combo: "Shift+L",
-                                     name: t("ModeToggleAudio")
-                                }]
-                            }, {
-                                items: [{
-                                    combo: "⌘/Ctrl+V",
-                                    name: t("KeyboardShortcutQuickPaste")
-                                }, {
-                                    combo: "Esc",
-                                    name: t("KeyboardShortcutClear")
-                                }, {
-                                    combo: "Esc",
-                                    name: t("KeyboardShortcutClosePopup")
-                                }]
-                            }, {
-                                items: [{
-                                     combo: "Shift+B",
-                                     name: t("AboutTab")
-                                }, {
-                                     combo: "Shift+N",
-                                     name: t("ChangelogTab")
-                                }, {
-                                    combo: "Shift+M",
-                                    name: t("TitlePopupSettings")
-                                }]
-                            }])}`
+                                    items: [{
+                                        combo: "Shift+B",
+                                        name: t("AboutTab")
+                                    }, {
+                                        combo: "Shift+N",
+                                        name: t("ChangelogTab")
+                                    }, {
+                                        combo: "Shift+M",
+                                        name: t("TitlePopupSettings")
+                                    }]
+                                }])}`
                         }, {
                             name: "support",
                             title: `${emoji("❤️‍🩹")} ${t("CollapseSupport")}`,
                             body: `${t("SupportSelfTroubleshooting")}`
-                            + `${socialLink(emoji("📢"), t("StatusPage"), links.statusPage)}`
-                            + `${socialLink(emoji("🔧"), t("TroubleshootingGuide"), links.troubleshootingGuide)}`
-                            + `<br>`
-                            + `${t("FollowSupport")}`
-                            + `${socialLinks(obj.lang)}`
-                            + `<br>`
-                            + `${t("SourceCode")}`
-                            + `${socialLink(emoji("🐙"), repo.replace("https://github.com/", ''), repo)}`
+                                + `${socialLink(emoji("📢"), t("StatusPage"), links.statusPage)}`
+                                + `${socialLink(emoji("🔧"), t("TroubleshootingGuide"), links.troubleshootingGuide)}`
+                                + `<br>`
+                                + `${t("FollowSupport")}`
+                                + `${socialLinks(obj.lang)}`
+                                + `<br>`
+                                + `${t("SourceCode")}`
+                                + `${socialLink(emoji("🐙"), repo.replace("https://github.com/", ''), repo)}`
                         }, {
                             name: "privacy",
                             title: `${emoji("🔒")} ${t("CollapsePrivacy")}`,
@@ -166,14 +170,14 @@ export default function(obj) {
                         }])
                     },
                     ...(process.env.showSponsors ?
-                    [{
-                        text: t("SponsoredBy"),
-                        classes: ["sponsored-by-text"],
-                        nopadding: true
-                    }, {
-                        text: sponsoredList(),
-                        raw: true
-                    }] : []
+                        [{
+                            text: t("SponsoredBy"),
+                            classes: ["sponsored-by-text"],
+                            nopadding: true
+                        }, {
+                            text: sponsoredList(),
+                            raw: true
+                        }] : []
                     )]
                 })
             }, {
@@ -194,11 +198,11 @@ export default function(obj) {
                             if (!banner) return '';
                             return `<div class="changelog-banner">
                                         <img class="changelog-img" ` +
-                                            `src="${banner.url}" ` +
-                                            `alt="${banner.alt.replaceAll('"', '&quot;')}" ` +
-                                            `width="${banner.width}" ` +
-                                            `height="${banner.height}" ` +
-                                            `onerror="this.style.opacity=0" loading="lazy">
+                                `src="${banner.url}" ` +
+                                `alt="${banner.alt.replaceAll('"', '&quot;')}" ` +
+                                `width="${banner.width}" ` +
+                                `height="${banner.height}" ` +
+                                `onerror="this.style.opacity=0" loading="lazy">
                                     </div>`;
                         })(),
                         raw: true
@@ -252,11 +256,11 @@ export default function(obj) {
                         text: `
                         <div class="changelog-banner">
                             <img class="changelog-img" ` +
-                                `src="updateBanners/catsleep.webp" ` +
-                                `alt="${t("DonateImageDescription")}" ` +
-                                `width="480" ` +
-                                `height="270" ` +
-                                `onerror="this.style.opacity=0" loading="lazy">
+                            `src="updateBanners/catsleep.webp" ` +
+                            `alt="${t("DonateImageDescription")}" ` +
+                            `width="480" ` +
+                            `height="270" ` +
+                            `onerror="this.style.opacity=0" loading="lazy">
                         </div>`,
                         raw: true
                     }, {
@@ -326,58 +330,58 @@ export default function(obj) {
                         }]
                     })
                 })
-                + settingsCategory({
-                    name: "tiktok-watermark",
-                    title: "tiktok",
-                    body: checkbox([{
-                        action: "disableTikTokWatermark",
-                        name: t("SettingsRemoveWatermark"),
-                        padding: "no-margin"
-                    }])
-                })
-                + settingsCategory({
-                    name: "twitter",
-                    title: "twitter",
-                    body: checkbox([{
-                        action: "twitterGif",
-                        name: t("SettingsTwitterGif"),
-                        padding: "no-margin"
-                    }])
-                    + explanation(t('SettingsTwitterGifDescription'))
-                })
-                + settingsCategory({
-                    name: "codec",
-                    title: t('SettingsCodecSubtitle'),
-                    body: switcher({
-                        name: "vCodec",
-                        explanation: t('SettingsCodecDescription'),
-                        items: [{
-                            action: "h264",
-                            text: "h264 (mp4)"
-                        }, {
-                            action: "av1",
-                            text: "av1 (mp4)"
-                        }, {
-                            action: "vp9",
-                            text: "vp9 (webm)"
-                        }]
+                    + settingsCategory({
+                        name: "tiktok-watermark",
+                        title: "tiktok",
+                        body: checkbox([{
+                            action: "disableTikTokWatermark",
+                            name: t("SettingsRemoveWatermark"),
+                            padding: "no-margin"
+                        }])
                     })
-                })
-                + settingsCategory({
-                    name: "vimeo",
-                    title: t('SettingsVimeoPrefer'),
-                    body: switcher({
-                        name: "vimeoDash",
-                        explanation: t('SettingsVimeoPreferDescription'),
-                        items: [{
-                            action: "false",
-                            text: "progressive"
-                        }, {
-                            action: "true",
-                            text: "dash"
-                        }]
+                    + settingsCategory({
+                        name: "twitter",
+                        title: "twitter",
+                        body: checkbox([{
+                            action: "twitterGif",
+                            name: t("SettingsTwitterGif"),
+                            padding: "no-margin"
+                        }])
+                            + explanation(t('SettingsTwitterGifDescription'))
                     })
-                })
+                    + settingsCategory({
+                        name: "codec",
+                        title: t('SettingsCodecSubtitle'),
+                        body: switcher({
+                            name: "vCodec",
+                            explanation: t('SettingsCodecDescription'),
+                            items: [{
+                                action: "h264",
+                                text: "h264 (mp4)"
+                            }, {
+                                action: "av1",
+                                text: "av1 (mp4)"
+                            }, {
+                                action: "vp9",
+                                text: "vp9 (webm)"
+                            }]
+                        })
+                    })
+                    + settingsCategory({
+                        name: "vimeo",
+                        title: t('SettingsVimeoPrefer'),
+                        body: switcher({
+                            name: "vimeoDash",
+                            explanation: t('SettingsVimeoPreferDescription'),
+                            items: [{
+                                action: "false",
+                                text: "progressive"
+                            }, {
+                                action: "true",
+                                text: "dash"
+                            }]
+                        })
+                    })
             }, {
                 name: "audio",
                 title: `${emoji("🎶")} ${t('SettingsAudioTab')}`,
@@ -389,39 +393,39 @@ export default function(obj) {
                         explanation: t('SettingsAudioFormatDescription'),
                         items: audioFormats
                     })
-                    + sep(0)
-                    + checkbox([{
-                        action: "muteAudio",
-                        name: t("SettingsVideoMute"),
-                        padding: "no-margin"
-                    }])
-                    + explanation(t('SettingsVideoMuteExplanation'))
+                        + sep(0)
+                        + checkbox([{
+                            action: "muteAudio",
+                            name: t("SettingsVideoMute"),
+                            padding: "no-margin"
+                        }])
+                        + explanation(t('SettingsVideoMuteExplanation'))
                 })
-                + settingsCategory({
-                    name: "dub",
-                    title: t("SettingsAudioDub"),
-                    body: switcher({
-                        name: "dubLang",
-                        explanation: t('SettingsAudioDubDescription'),
-                        items: [{
-                            action: "original",
-                            text: t('SettingsDubDefault')
-                        }, {
-                            action: "auto",
-                            text: t('SettingsDubAuto')
-                        }]
+                    + settingsCategory({
+                        name: "dub",
+                        title: t("SettingsAudioDub"),
+                        body: switcher({
+                            name: "dubLang",
+                            explanation: t('SettingsAudioDubDescription'),
+                            items: [{
+                                action: "original",
+                                text: t('SettingsDubDefault')
+                            }, {
+                                action: "auto",
+                                text: t('SettingsDubAuto')
+                            }]
+                        })
                     })
-                })
-                + settingsCategory({
-                    name: "tiktok-audio",
-                    title: "tiktok",
-                    body: checkbox([{
-                        action: "fullTikTokAudio",
-                        name: t("SettingsAudioFullTikTok"),
-                        padding: "no-margin"
-                    }])
-                    + explanation(t('SettingsAudioFullTikTokDescription'))
-                })
+                    + settingsCategory({
+                        name: "tiktok-audio",
+                        title: "tiktok",
+                        body: checkbox([{
+                            action: "fullTikTokAudio",
+                            name: t("SettingsAudioFullTikTok"),
+                            padding: "no-margin"
+                        }])
+                            + explanation(t('SettingsAudioFullTikTokDescription'))
+                    })
             }, {
                 name: "other",
                 title: `${emoji("🪅")} ${t('SettingsOtherTab')}`,
@@ -442,26 +446,26 @@ export default function(obj) {
                         }]
                     })
                 })
-                + settingsCategory({
-                    name: "filename",
-                    title: t('FilenameTitle'),
-                    body: switcher({
-                        name: "filenamePattern",
-                        items: [{
-                            action: "classic",
-                            text: t('FilenamePatternClassic')
-                        }, {
-                            action: "basic",
-                            text: t('FilenamePatternBasic')
-                        }, {
-                            action: "pretty",
-                            text: t('FilenamePatternPretty')
-                        }, {
-                            action: "nerdy",
-                            text: t('FilenamePatternNerdy')
-                        }]
-                    })
-                    + `<div id="filename-preview">
+                    + settingsCategory({
+                        name: "filename",
+                        title: t('FilenameTitle'),
+                        body: switcher({
+                            name: "filenamePattern",
+                            items: [{
+                                action: "classic",
+                                text: t('FilenamePatternClassic')
+                            }, {
+                                action: "basic",
+                                text: t('FilenamePatternBasic')
+                            }, {
+                                action: "pretty",
+                                text: t('FilenamePatternPretty')
+                            }, {
+                                action: "nerdy",
+                                text: t('FilenamePatternNerdy')
+                            }]
+                        })
+                            + `<div id="filename-preview">
                         <div id="video-filename" class="filename-item line">
                             ${emoji('🎞️', 32, 1, 1)}
                             <div class="filename-container">
@@ -477,40 +481,40 @@ export default function(obj) {
                             </div>
                         </div>
                     </div>`
-                    + explanation(t('FilenameDescription'))
-                })
-                + settingsCategory({
-                    name: "accessibility",
-                    title: t('Accessibility'),
-                    body: checkbox([{
-                        action: "alwaysVisibleButton",
-                        name: t("SettingsKeepDownloadButton"),
-                        aria: t("AccessibilityKeepDownloadButton")
-                    }, {
-                        action: "reduceTransparency",
-                        name: t("SettingsReduceTransparency")
-                    }, {
-                        action: "disableAnimations",
-                        name: t("SettingsDisableAnimations"),
-                        padding: "no-margin"
-                    }])
-                })
-                + settingsCategory({
-                    name: "miscellaneous",
-                    title: t('Miscellaneous'),
-                    body: checkbox([{
-                        action: "downloadPopup",
-                        name: t("SettingsEnableDownloadPopup"),
-                        aria: t("AccessibilityEnableDownloadPopup")
-                    }, {
-                        action: "disableMetadata",
-                        name: t("SettingsDisableMetadata")
-                    }, {
-                        action: "disableChangelog",
-                        name: t("SettingsDisableNotifications"),
-                        padding: "no-margin"
-                    }])
-                })
+                            + explanation(t('FilenameDescription'))
+                    })
+                    + settingsCategory({
+                        name: "accessibility",
+                        title: t('Accessibility'),
+                        body: checkbox([{
+                            action: "alwaysVisibleButton",
+                            name: t("SettingsKeepDownloadButton"),
+                            aria: t("AccessibilityKeepDownloadButton")
+                        }, {
+                            action: "reduceTransparency",
+                            name: t("SettingsReduceTransparency")
+                        }, {
+                            action: "disableAnimations",
+                            name: t("SettingsDisableAnimations"),
+                            padding: "no-margin"
+                        }])
+                    })
+                    + settingsCategory({
+                        name: "miscellaneous",
+                        title: t('Miscellaneous'),
+                        body: checkbox([{
+                            action: "downloadPopup",
+                            name: t("SettingsEnableDownloadPopup"),
+                            aria: t("AccessibilityEnableDownloadPopup")
+                        }, {
+                            action: "disableMetadata",
+                            name: t("SettingsDisableMetadata")
+                        }, {
+                            action: "disableChangelog",
+                            name: t("SettingsDisableNotifications"),
+                            padding: "no-margin"
+                        }])
+                    })
             }]
         })}
         ${popupWithBottomButtons({
@@ -525,62 +529,62 @@ export default function(obj) {
         })}
         <div id="popup-download-container" class="popup-from-bottom">
             ${popup({
+            name: "download",
+            standalone: true,
+            buttonOnly: true,
+            classes: ["small"],
+            header: {
+                closeAria: t('AccessibilityGoBack'),
+                emoji: emoji("🐱", 78, 1, 1),
+                title: t('TitlePopupDownload')
+            },
+            body: switcher({
                 name: "download",
-                standalone: true,
-                buttonOnly: true,
-                classes: ["small"],
-                header: {
-                    closeAria: t('AccessibilityGoBack'),
-                    emoji: emoji("🐱", 78, 1, 1),
-                    title: t('TitlePopupDownload')
-                },
-                body: switcher({
-                    name: "download",
-                    explanation: `${!isIOS ? t('DownloadPopupDescription') : t('DownloadPopupDescriptionIOS')}`,
-                    items: `<a id="pd-download" class="switch full" target="_blank" href="/"><span>${t('Download')}</span></a>
+                explanation: `${!isIOS ? t('DownloadPopupDescription') : t('DownloadPopupDescriptionIOS')}`,
+                items: `<a id="pd-download" class="switch full" target="_blank" href="/"><span>${t('Download')}</span></a>
                     <div id="pd-share" class="switch full">${t('ShareURL')}</div>
                     <div id="pd-copy" class="switch full">${t('CopyURL')}</div>`
-                }),
-                buttonText: t('PopupCloseDone')
-            })}
+            }),
+            buttonText: t('PopupCloseDone')
+        })}
         </div>
         <div id="popup-error-container" class="popup-from-bottom">
             ${popup({
-                name: "error",
-                standalone: true,
-                buttonOnly: true,
-                classes: ["small"],
-                header: {
-                    title: t('TitlePopupError'),
-                    emoji: emoji("😿", 78, 1, 1),
-                },
-                body: `<div id="desc-error" class="desc-padding subtext desc-error"></div>`,
-                buttonText: t('ErrorPopupCloseButton')
-            })}
+            name: "error",
+            standalone: true,
+            buttonOnly: true,
+            classes: ["small"],
+            header: {
+                title: t('TitlePopupError'),
+                emoji: emoji("😿", 78, 1, 1),
+            },
+            body: `<div id="desc-error" class="desc-padding subtext desc-error"></div>`,
+            buttonText: t('ErrorPopupCloseButton')
+        })}
         </div>
         <div id="popup-migration-container" class="popup-from-bottom">
             ${popup({
-                name: "migration",
-                standalone: true,
-                buttonOnly: true,
-                classes: ["small"],
-                header: {
-                    title: t('NewDomainWelcomeTitle'),
-                    emoji: emoji("😸", 78, 1, 1),
-                },
-                body: `<div id="desc-migration" class="desc-padding subtext desc-error">${t('NewDomainWelcome')}</div>`,
-                buttonText: t('ErrorPopupCloseButton')
-            })}
+            name: "migration",
+            standalone: true,
+            buttonOnly: true,
+            classes: ["small"],
+            header: {
+                title: t('NewDomainWelcomeTitle'),
+                emoji: emoji("😸", 78, 1, 1),
+            },
+            body: `<div id="desc-migration" class="desc-padding subtext desc-error">${t('NewDomainWelcome')}</div>`,
+            buttonText: t('ErrorPopupCloseButton')
+        })}
             <div id="popup-backdrop-message" onclick="popup('message', 0)"></div>
         </div>
         <div id="popup-backdrop" onclick="hideAllPopups()"></div>
         <div id="home" style="visibility:hidden">
             ${urgentNotice({
-                emoji: "🎬",
-                text: t("UpdateTwitterGif"),
-                visible: true,
-                action: "popup('about', 1, 'changelog')"
-            })}
+            emoji: "🎬",
+            text: t("UpdateTwitterGif"),
+            visible: true,
+            action: "popup('about', 1, 'changelog')"
+        })}
             <div id="cobalt-main-box" class="center">
                 <div id="logo">${t("AppTitleCobalt")}${betaTag()}</div>
                 <div id="download-area">
@@ -593,37 +597,37 @@ export default function(obj) {
                     <div id="bottom">
                         <button id="paste" class="switch" onclick="pasteClipboard()" aria-label="${t('PasteFromClipboard')}">${emoji("📋", 22)} ${t('PasteFromClipboard')}</button>
                         ${switcher({
-                            name: "audioMode",
-                            noParent: true,
-                            items: [{
-                                action: "false",
-                                text: `${emoji("✨")} ${t("ModeToggleAuto")}`
-                            }, {
-                                action: "true",
-                                text: `${emoji("🎶")} ${t("ModeToggleAudio")}`
-                            }]
-                        })}
+            name: "audioMode",
+            noParent: true,
+            items: [{
+                action: "false",
+                text: `${emoji("✨")} ${t("ModeToggleAuto")}`
+            }, {
+                action: "true",
+                text: `${emoji("🎶")} ${t("ModeToggleAudio")}`
+            }]
+        })}
                     </div>
                 </div>
             </div>
             <footer id="footer">
                 ${footerButtons([{
-                    name: "about",
-                    type: "popup",
-                    text: `${emoji("🐲" , 22)} ${t('AboutTab')}`,
-                    aria: t('AccessibilityOpenAbout')
-                }, {
-                    name: "about",
-                    type: "popup",
-                    context: "donate",
-                    text: `${emoji("💖", 22)} ${t('Donate')}`,
-                    aria: t('AccessibilityOpenDonate')
-                }, {
-                    name: "settings",
-                    type: "popup",
-                    text: `${emoji("⚙️", 22)} ${t('TitlePopupSettings')}`,
-                    aria: t('AccessibilityOpenSettings')
-                }])}
+            name: "about",
+            type: "popup",
+            text: `${emoji("🐲" , 22)} ${t('AboutTab')}`,
+            aria: t('AccessibilityOpenAbout')
+        }, {
+            name: "about",
+            type: "popup",
+            context: "donate",
+            text: `${emoji("💖", 22)} ${t('Donate')}`,
+            aria: t('AccessibilityOpenDonate')
+        }, {
+            name: "settings",
+            type: "popup",
+            text: `${emoji("⚙️", 22)} ${t('TitlePopupSettings')}`,
+            aria: t('AccessibilityOpenSettings')
+        }])}
             </footer>
         </div>
         <script>

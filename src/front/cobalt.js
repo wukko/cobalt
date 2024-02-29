@@ -610,6 +610,11 @@ window.onload = () => {
         detectColorScheme();
         popup("migration", 1);
     }
+    if (pageQuery.has("opensearchquery")) {
+        eid("url-input-area").value = pageQuery.get("opensearchquery");
+        button();
+        eid("download-button").click();
+    }
     window.history.replaceState(null, '', window.location.pathname);
 
     notificationCheck();

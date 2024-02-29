@@ -157,6 +157,9 @@
         "SettingsTwitterGifDescription": "converting looping videos to .gif reduces quality and majorly increases file size. if you want best efficiency, keep this setting off.",
         "UpdateTwitterGif": "twitter gifs and pinterest",
         "ErrorTweetProtected": "this tweet is from a private account, so i can't see it. try another one!",
-        "ErrorTweetNSFW": "this tweet contains sensitive content, so i can't see it. try another one!"
+        "ErrorTweetNSFW": "this tweet contains sensitive content, so i can't see it. try another one!",
+        "ErrorOpenSearch": "<!-- the opensearch xml file failed to build for language {s} :( -->",
+        "OpenSearchTitle": "Cobalt",
+        "OpenSearchDescription": "Cobalt is your go-to place for downloads from social and media platforms. Zero ads, trackers, or other creepy bullshit. Simply paste a share link and you're ready to rock!"
     }
 }

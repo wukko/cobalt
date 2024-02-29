@@ -159,6 +159,9 @@
         "SettingsTwitterGifDescription": "конвертирование зацикленного видео в .gif снижает качество и значительно увеличивает размер файла. если важна максимальная эффективность, то не используй эту функцию.",
         "UpdateTwitterGif": "гифки с твиттера и одноклассники",
         "ErrorTweetProtected": "этот твит из закрытого аккаунта, поэтому я не могу его увидеть. попробуй другой!",
-        "ErrorTweetNSFW": "этот твит содержит деликатный контент, поэтому я не могу его увидеть. попробуй другой!"
+        "ErrorTweetNSFW": "этот твит содержит деликатный контент, поэтому я не могу его увидеть. попробуй другой!",
+        "ErrorOpenSearch": "<!-- TODO TRANSLATE ME!! the opensearch xml file failed to build for language {s} :( -->",
+        "OpenSearchTitle": "TODO TRANSLATE ME!! Cobalt",
+        "OpenSearchDescription": "TODO TRANSLATE ME!! Cobalt is your go-to place for downloads from social and media platforms. Zero ads, trackers, or other creepy bullshit. Simply paste a share link and you're ready to rock!"
     }
 }

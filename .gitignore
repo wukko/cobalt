@@ -24,3 +24,6 @@ docker-compose.yml
 
 # cookie file
 cookies.json
+
+# opensearch xml build
+src/front/opensearch*

@@ -4,6 +4,7 @@ import { loadLoc, languageList } from "../localization/manager.js";
 import { cleanHTML } from "./sub/utils.js";
 
 import page from "./pageRender/page.js";
+import buildOpenSearch from "./pageRender/buildOpenSearch.js";
 
 export async function buildFront(commitHash, branch) {
     try {
@@ -30,6 +31,9 @@ export async function buildFront(commitHash, branch) {
                 "branch": branch
             }
             fs.writeFileSync(`./build/pc/${i}.html`, cleanHTML(page(params)));
+
+            // build opensearch xml
+            fs.writeFileSync(`./src/front/opensearch-${i}.xml`, cleanHTML(buildOpenSearch(i)));
 
             params["useragent"] = "iphone os";
             fs.writeFileSync(`./build/ios/${i}.html`, cleanHTML(page(params)));
