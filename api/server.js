@@ -1,5 +1,4 @@
 import "dotenv/config";
-import "./modules/util/alias-envs.js";
 
 import express from "express";
 
@@ -20,7 +19,7 @@ const __dirname = path.dirname(__filename).slice(0, -4);
 
 app.disable('x-powered-by');
 
-if (process.env.API_URL) {
+if (process.env.API_URL && !process.env.WEB_URL) {
     runAPI(express, app, gitCommit, gitBranch, __dirname)
 } else {
     console.log(
