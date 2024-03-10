@@ -1,5 +1,5 @@
 import HLSParser from 'hls-parser';
-import { maxVideoDuration } from '../../config.js';
+import { maxVideoDuration } from '../../../core/config.js';
 
 let _token;
 
