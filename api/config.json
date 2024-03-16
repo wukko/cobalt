@@ -1,0 +1,14 @@
+{
+    "streamLifespan": 90000,
+    "maxVideoDuration": 10800000,
+    "genericUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+    "supportedAudio": ["mp3", "ogg", "wav", "opus"],
+    "ffmpegArgs": {
+        "webm": ["-c:v", "copy", "-c:a", "copy"],
+        "mp4": ["-c:v", "copy", "-c:a", "copy", "-movflags", "faststart+frag_keyframe+empty_moov"],
+        "copy": ["-c:a", "copy"],
+        "audio": ["-ar", "48000", "-ac", "2", "-b:a", "320k"],
+        "m4a": ["-movflags", "frag_keyframe+empty_moov"],
+        "gif": ["-vf", "scale=-1:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse", "-loop", "0"]
+    }
+}
