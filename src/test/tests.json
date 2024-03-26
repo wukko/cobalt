@@ -878,6 +878,30 @@
             "code": 200,
             "status": "redirect"
         }
+    }, {
+        "name": "ddinstagram link",
+        "url": "https://ddinstagram.com/p/CmCVWoIr9OH/",
+        "params": {},
+        "expected": {
+            "code": 200,
+            "status": "redirect"
+        }
+    }, {
+        "name": "d.ddinstagram.com link",
+        "url": "https://d.ddinstagram.com/p/CmCVWoIr9OH/",
+        "params": {},
+        "expected": {
+            "code": 200,
+            "status": "redirect"
+        }
+    }, {
+        "name": "g.ddinstagram.com link",
+        "url": "https://g.ddinstagram.com/p/CmCVWoIr9OH/",
+        "params": {},
+        "expected": {
+            "code": 200,
+            "status": "redirect"
+        }
     }],
     "vine": [{
         "name": "regular vine link (9+10=21)",
