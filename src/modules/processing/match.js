@@ -25,6 +25,7 @@ import streamable from "./services/streamable.js";
 import twitch from "./services/twitch.js";
 import rutube from "./services/rutube.js";
 import dailymotion from "./services/dailymotion.js";
+import facebook from "./services/facebook.js";
 
 export default async function(host, patternMatch, url, lang, obj) {
     assert(url instanceof URL);
@@ -159,6 +160,9 @@ export default async function(host, patternMatch, url, lang, obj) {
                 break;
             case "dailymotion":
                 r = await dailymotion(patternMatch);
+                break;
+            case "facebook":
+                r = await facebook(patternMatch);
                 break;
             default:
                 return apiJSON(0, { t: errorUnsupported(lang) });

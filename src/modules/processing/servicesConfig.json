@@ -115,6 +115,18 @@
             "alias": "dailymotion videos",
             "patterns": ["video/:id"],
             "enabled": true
+        },
+        "facebook": {
+            "alias": "facebook videos",
+            "altDomains": ["fb.watch"],
+            "subdomains": ["web"],
+            "patterns": [
+                "_shortLink/:shortLink",
+                ":username/videos/:caption/:id",
+                ":username/videos/:id",
+                "reel/:id"
+            ],
+            "enabled": true
         }
     }
 }

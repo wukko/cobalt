@@ -23,7 +23,7 @@ export function aliasURL(url) {
                 ** but we only care about the 1st segment of the path */
                 url = new URL(`https://youtube.com/watch?v=${
                     encodeURIComponent(parts[1])
-                }`)
+                    }`)
             }
             break;
 
@@ -31,7 +31,7 @@ export function aliasURL(url) {
             if (url.hostname === 'pin.it' && parts.length === 2) {
                 url = new URL(`https://pinterest.com/url_shortener/${
                     encodeURIComponent(parts[1])
-                }`)
+                    }`)
             }
             break;
 
@@ -64,6 +64,16 @@ export function aliasURL(url) {
             if (url.hostname === 'dai.ly' && parts.length === 2) {
                 url = new URL(`https://dailymotion.com/video/${parts[1]}`)
             }
+
+        case "facebook":
+        case "fb":
+            if (url.searchParams.get('v')) {
+                url = new URL(`https://web.facebook.com/user/videos/${url.searchParams.get('v')}`)
+            }
+            if (url.hostname === 'fb.watch') {
+                url = new URL(`https://web.facebook.com/_shortLink/${parts[1]}`)
+            }
+            break;
     }
 
     return url
