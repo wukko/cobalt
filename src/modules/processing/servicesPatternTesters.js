@@ -1,5 +1,5 @@
 export const testers = {
-    "bilibili": (patternMatch) => 
+    "bilibili": (patternMatch) =>
         patternMatch.comId?.length <= 12 || patternMatch.comShortLink?.length <= 16
         || patternMatch.tvId?.length <= 24,
 
@@ -8,7 +8,7 @@ export const testers = {
     "instagram": (patternMatch) =>
         patternMatch.postId?.length <= 12
         || (patternMatch.username?.length <= 30 && patternMatch.storyId?.length <= 24),
-    
+
     "ok": (patternMatch) =>
         patternMatch.id?.length <= 16,
 
@@ -22,12 +22,12 @@ export const testers = {
         patternMatch.id?.length === 32,
 
     "soundcloud": (patternMatch) =>
-        (patternMatch.author?.length <= 255 && patternMatch.song?.length <= 255) 
+        (patternMatch.author?.length <= 255 && patternMatch.song?.length <= 255)
         || patternMatch.shortLink?.length <= 32,
 
     "streamable": (patternMatch) =>
         patternMatch.id?.length === 6,
-    
+
     "tiktok": (patternMatch) =>
         patternMatch.postId?.length <= 21 || patternMatch.id?.length <= 13,
 
@@ -53,4 +53,10 @@ export const testers = {
 
     "youtube": (patternMatch) =>
         patternMatch.id?.length <= 11,
+
+    "facebook": (patternMatch) =>
+        patternMatch.shortLink?.length <= 11
+        || patternMatch.username?.length <= 30
+        || patternMatch.caption?.length <= 255
+        || patternMatch.id?.length <= 20,
 }

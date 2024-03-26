@@ -1115,5 +1115,46 @@
             "code": 200,
             "status": "stream"
         }
+    }],
+    "facebook": [{
+        "name": "direct video with username and id",
+        "url": "https://web.facebook.com/100048111287134/videos/1157798148685638/",
+        "params": {},
+        "expected": {
+            "code": 200,
+            "status": "stream"
+        }
+    }, {
+        "name": "direct video with id as query param",
+        "url": "https://web.facebook.com/watch/?v=883839773514682&ref=sharing",
+        "params": {},
+        "expected": {
+            "code": 200,
+            "status": "stream"
+        }
+    }, {
+        "name": "direct video with caption",
+        "url": "https://web.facebook.com/wood57/videos/𝐒𝐞𝐛𝐚𝐬𝐤𝐨𝐦-𝐟𝐮𝐥𝐥/883839773514682",
+        "params": {},
+        "expected": {
+            "code": 200,
+            "status": "stream"
+        }
+    }, {
+        "name": "shortlink video",
+        "url": "https://fb.watch/r1K6XHMfGT/",
+        "params": {},
+        "expected": {
+            "code": 200,
+            "status": "stream"
+        }
+    }, {
+        "name": "reel video",
+        "url": "https://web.facebook.com/reel/730293269054758",
+        "params": {},
+        "expected": {
+            "code": 200,
+            "status": "stream"
+        }
     }]
 }
