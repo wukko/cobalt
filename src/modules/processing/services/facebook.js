@@ -10,7 +10,7 @@ const headers = {
 }
 
 async function resolveUrl(url) {
-    return await fetch(url, { headers })
+    return fetch(url, { headers })
         .then(r => {
             if (r.headers.get('location')) {
                 return decodeURIComponent(r.headers.get('location'))
