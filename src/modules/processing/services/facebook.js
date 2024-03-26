@@ -9,7 +9,7 @@ const headers = {
     'Sec-Fetch-Site': 'none',
 }
 
-async function resolveUrl(url) {
+function resolveUrl(url) {
     return fetch(url, { headers })
         .then(r => {
             if (r.headers.get('location')) {
